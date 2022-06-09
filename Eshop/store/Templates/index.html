@@ -1,22 +1,21 @@
 {% extends 'base.html' %}
 <!-- body -->
 {% block content %}
-<div class="container-fluid mt-3">
+<div class="container-fluid mb-4 mt-3">
     <div class="row">
 
     <!-- filter -->
-
+    
     <div class="col-lg-3">
 
-        <ul class="list-group mb-4 mt-3">
-            <li class="list-group-item active">Active item</li>
-            <li class="list-group-item">Item</li>
-            <li class="list-group-item disabled">Disabled item</li>
-        </ul>
-
-
+       <div class="list-group">
+        {% for c in category %}
+           <a href="#" class="list-group-item list-group-item-action mt-3">{{c}}</a>
+           <!-- <a href="#" class="list-group-item list-group-item-action">Item</a>
+           <a href="#" class="list-group-item list-group-item-action disabled">Disabled item</a> -->
+        {% endfor %}
+       </div>
     </div>
-    
     <!-- all product -->
 
     <div id="product" class="col-lg-9 mx-auto">
