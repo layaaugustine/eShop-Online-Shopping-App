@@ -8,16 +8,15 @@ from .models import Product,Category
 
 # Create your views here.
 
-# def index(request):
-#     datasample = loader.get_template('index.html')
-#     print(Product.objects.all())
-#     prds=Product.objects.all
-#     data={'products':prds}
-#     response=datasample.render(data,request)
-#     return HttpResponse(response)
-
 def index(request):
-    prdts = Product.objects.all()
-    catgry=Category.objects.all()
-    data={'products':prdts,'category':catgry}
+    prdts = None
+    catgry=Category.get_all_categories()
+    categoryID=request.GET.get('category')
+    if categoryID:
+        prdts=Product.get_all_product_by_categoryid(categoryID)
+    else:
+        prdts=Product.objects.all()
+    data={}
+    data['products']=prdts
+    data['categories']=catgry
     return render(request,'index.html',data)
