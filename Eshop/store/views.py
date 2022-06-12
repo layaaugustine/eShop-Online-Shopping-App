@@ -11,7 +11,7 @@ from .models import Product,Category
 def index(request):
     prdts = None
     catgry=Category.get_all_categories()
-    categoryID=request.GET.get('category')
+    categoryID=request.GET.get('Category')
     if categoryID:
         prdts=Product.get_all_product_by_categoryid(categoryID)
     else:
