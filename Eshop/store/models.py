@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib import admin
 # Create your models her
 
+# ----------------CATEGORY------------------
+
 class Category(models.Model):
     name=models.CharField(max_length=20)
 
@@ -11,6 +13,8 @@ class Category(models.Model):
     @staticmethod
     def get_all_categories():
         return Category.objects.all()
+
+# -----------------PRODUCT---------------------
 
 class Product(models.Model):
     name = models.CharField(max_length=50)
@@ -39,4 +43,11 @@ class AdminProduct(admin.ModelAdmin):
 class AdminCategory(admin.ModelAdmin):
     list_display = ['name']
 
-    
+# -----------------CUSTOMER------------------------
+
+class Customer(models.Model):
+    first_name =models.CharField(max_length=50)
+    last_name =models.CharField(max_length=50)
+    phone =models.CharField(max_length=10)
+    email=models.EmailField()
+    password =models.CharField(max_length=10)
