@@ -23,4 +23,12 @@ def index(request):
 
 
 def signup(request):
-    return render(request,'signup.html')
+    if request.method=='GET':
+        print(request.method)            # view form to customer
+        return render(request,'signup.html')
+    else:
+        print(request.method)             # customer post details
+
+        return HttpResponse("H")
+
+

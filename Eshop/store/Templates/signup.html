@@ -5,8 +5,8 @@
     <div class="p-4 m-4 ">
       <div class="col-sm-4 mx-auto border rounded pt-4">
         <h3 class="alert alert-light border rounded">Create An Account</h3>
-        <form action="">
-
+        <form action="/signup" method="post">
+          {% csrf_token %}
           <!-- first name -->
 
         <div class="form-group">
@@ -44,7 +44,7 @@
 
         <!-- submit -->
         <div class="form-group">
-        <button type="submit" class="btn btn-primary ">Submit</button>
+        <button type="submit" class="btn btn-primary ">Create An Account</button>
         </div>
         </form>
       </div>
