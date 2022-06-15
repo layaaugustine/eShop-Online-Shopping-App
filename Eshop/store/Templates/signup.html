@@ -7,6 +7,14 @@
         <h3 class="alert alert-light border rounded">Create An Account</h3>
         <form action="/signup" method="post">
           {% csrf_token %}
+
+          <!-- error message -->
+          {% if error %}
+          <div class="alert alert-danger" role="alert">
+            {{error}}
+          </div>
+          {% endif%}
+
           <!-- first name -->
 
         <div class="form-group">
@@ -25,14 +33,14 @@
 
         <div class="form-group">
           <label for="">Phone Number</label>
-          <input type="phone" name="phone" id="" class="form-control" placeholder="1234567890">
+          <input type="number" name="phone" id="" class="form-control" placeholder="1234567890">
         </div>
 
       <!-- email -->
 
         <div class="form-group">
           <label for="">Email</label>
-          <input type="email" name="email" id="" class="form-control" placeholder="example@gmail.com">
+          <input required type="email" name="email" id="" class="form-control" placeholder="example@gmail.com">
         </div>
 
         <!-- password -->

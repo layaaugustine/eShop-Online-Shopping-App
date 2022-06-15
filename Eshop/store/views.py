@@ -35,13 +35,40 @@ def signup(request):
         phones= postData.get('phone')
         emails= postData.get('email')
         passwords= postData.get('password')
-        customer = Customer(first_name =first_names,
-                            last_name = last_names,
-                            phone = phones,
-                            email=emails,
-                            password = passwords)
-        customer.save()
         
-        return render(request,'index.html')
+        #validation
+        
+        error_message = None
+
+        if (not first_names):
+            error_message="First Name Required !!!"
+        elif len(first_names)<4:
+            error_message = "First Name must be 4 char long  or more "
+        elif (not last_names):
+            error_message="Last Name Required !!!"
+        elif len(last_names)<4:
+             error_message = "Last Name must be 4 char long  or more "
+        elif (not phones):
+            error_message="Phone Number Required !!!"
+        elif len(phones)!=10:
+            error_message="Phone Number Must be 10"
+        elif (not passwords):
+            error_message="Password Required !!!"
+        elif len(passwords)<6:
+            error_message="Password Must be 6 char long"
+        elif len(emails)<5:
+            error_message="Email must be 5 char long"
+
+        # saving
+        if not error_message:
+            customer = Customer(first_name =first_names,
+                                last_name = last_names,
+                                phone = phones,
+                                email=emails,
+                                password = passwords)
+            customer.save()
+            return HttpResponse("success")
+        else:
+            return render(request,'signup.html',{'error':error_message})
 
 
