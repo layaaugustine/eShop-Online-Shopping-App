@@ -1,10 +1,11 @@
+import email
 from urllib import response
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.template import loader
 from django.http import HttpResponse
 from numpy import product
-from .models import Product,Category
+from .models import Product,Category,Customer
 
 # Create your views here.
 
@@ -28,7 +29,19 @@ def signup(request):
         return render(request,'signup.html')
     else:
         print(request.method)             # customer post details
-
-        return HttpResponse("H")
+        postData=request.POST
+        first_names = postData.get('firstname')
+        last_names = postData.get('lastname')
+        phones= postData.get('phone')
+        emails= postData.get('email')
+        passwords= postData.get('password')
+        customer = Customer(first_name =first_names,
+                            last_name = last_names,
+                            phone = phones,
+                            email=emails,
+                            password = passwords)
+        customer.save()
+        
+        return render(request,'index.html')
 
 

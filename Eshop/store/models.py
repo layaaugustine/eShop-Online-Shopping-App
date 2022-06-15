@@ -51,3 +51,6 @@ class Customer(models.Model):
     phone =models.CharField(max_length=10)
     email=models.EmailField()
     password =models.CharField(max_length=10)
+
+class AdminCustomer(admin.ModelAdmin):
+    list_display = ['first_name']
