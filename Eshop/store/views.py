@@ -37,7 +37,14 @@ def signup(request):
         passwords= postData.get('password')
         
         #validation
-        
+
+        value = {
+            'firstz_name':first_names,
+            'lastz_name' :last_names,
+            'phonez' : phones,
+            'emailz' :emails
+        }
+
         error_message = None
 
         if (not first_names):
@@ -67,8 +74,12 @@ def signup(request):
                                 email=emails,
                                 password = passwords)
             customer.save()
-            return HttpResponse("success")
+            return render(request,'index.html')
         else:
-            return render(request,'signup.html',{'error':error_message})
+            data={
+                'error':error_message,                            # if we have error,entered data automatic save,its add in signup page too
+                'values':value
+            }
+            return render(request,'signup.html',data)
 
 
