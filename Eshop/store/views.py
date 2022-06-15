@@ -9,6 +9,8 @@ from .models import Product,Category,Customer
 
 # Create your views here.
 
+
+
 def index(request):
     prdts = None
     catgry=Category.get_all_categories()
@@ -82,4 +84,4 @@ def signup(request):
             }
             return render(request,'signup.html',data)
 
-
+### 25
