@@ -26,6 +26,7 @@ def index(request):
     # data['products']=prdts
     # data['categories']=catgry
     return render(request,'index.html',data)
+      
 
 
 def signup(request):
@@ -40,7 +41,9 @@ def signup(request):
         phones= postData.get('phone')
         emails= postData.get('email')
         passwords= postData.get('password')
-        
+        # return registerUser(request)
+
+
         #validation
 
         value = {
@@ -57,6 +60,8 @@ def signup(request):
                                 phone = phones,
                                 email=emails,
                                 password=passwords)
+
+        # validateCustomer(customer)
 
         if (not first_names):
             error_message="First Name Required !!!"
@@ -82,6 +87,9 @@ def signup(request):
       
 
         # saving 
+
+
+
         if not error_message:
             # customer = Customer(first_name =first_names,
             #                     last_name = last_names,
