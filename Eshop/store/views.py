@@ -107,3 +107,7 @@ def signup(request):
             return render(request,'signup.html',data)
 
 
+# login
+
+def login(request):
+    return render(request,'login.html')
