@@ -7,10 +7,12 @@ from django.http import HttpResponse
 from numpy import product
 from .models import Product,Category,Customer
 
+from django.contrib.auth.hashers import make_password,check_password
 # Create your views here.
 
 
-
+# print(make_password('1234'))
+# print(check_password('1234','pbkdf2_sha256$320000$PkZpFTYwnHJqneea3kucX6$8I9DcV9CKqGsLywdUVnphUwdtGgQm61MOuIjmQSm9CE='))
 def index(request):
     prdts = None
     catgry=Category.get_all_categories()
@@ -54,7 +56,7 @@ def signup(request):
                                 last_name = last_names,
                                 phone = phones,
                                 email=emails,
-                                password = passwords)
+                                password=passwords)
 
         if (not first_names):
             error_message="First Name Required !!!"
@@ -86,6 +88,7 @@ def signup(request):
             #                     phone = phones,
             #                     email=emails,
             #                     password = passwords)
+            customer.password=make_password(customer.password)    # Encoding form
             customer.save()
             return redirect('homepage')
         else:
@@ -95,4 +98,4 @@ def signup(request):
             }
             return render(request,'signup.html',data)
 
-### 25
+
