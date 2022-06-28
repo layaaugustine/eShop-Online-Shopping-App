@@ -18,10 +18,11 @@ def index(request):
     if categoryID:
         prdts=Product.get_all_product_by_categoryid(categoryID)
     else:
-        prdts=Product.objects.all()
-    data={}
-    data['products']=prdts
-    data['categories']=catgry
+        # prdts=Product.objects.all()
+        prdts=Product.get_all_product()
+    data={'products':prdts,'categories':catgry}
+    # data['products']=prdts
+    # data['categories']=catgry
     return render(request,'index.html',data)
 
 
