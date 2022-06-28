@@ -1,7 +1,7 @@
 import email
 from urllib import response
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.template import loader
 from django.http import HttpResponse
 from numpy import product
@@ -50,6 +50,12 @@ def signup(request):
 
         error_message = None
 
+        customer = Customer(first_name =first_names,
+                                last_name = last_names,
+                                phone = phones,
+                                email=emails,
+                                password = passwords)
+
         if (not first_names):
             error_message="First Name Required !!!"
         elif len(first_names)<4:
@@ -69,15 +75,19 @@ def signup(request):
         elif len(emails)<5:
             error_message="Email must be 5 char long"
 
-        # saving
+        elif customer.isExists():
+            error_message="Email address already Exist!!"
+      
+
+        # saving 
         if not error_message:
-            customer = Customer(first_name =first_names,
-                                last_name = last_names,
-                                phone = phones,
-                                email=emails,
-                                password = passwords)
+            # customer = Customer(first_name =first_names,
+            #                     last_name = last_names,
+            #                     phone = phones,
+            #                     email=emails,
+            #                     password = passwords)
             customer.save()
-            return render(request,'index.html')
+            return redirect('homepage')
         else:
             data={
                 'error':error_message,                            # if we have error,entered data automatic save,its add in signup page too

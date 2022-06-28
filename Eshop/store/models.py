@@ -1,5 +1,7 @@
+import email
 from django.db import models
 from django.contrib import admin
+from django.http import HttpRequest
 # Create your models her
 
 # ----------------CATEGORY------------------
@@ -52,5 +54,16 @@ class Customer(models.Model):
     email=models.EmailField()
     password =models.CharField(max_length=10)
 
+
+    def isExists(self):
+        if Customer.objects.filter(email=self.email):
+            return True
+        else:
+            return False
+
 class AdminCustomer(admin.ModelAdmin):
     list_display = ['first_name']
+    
+    
+
+  
