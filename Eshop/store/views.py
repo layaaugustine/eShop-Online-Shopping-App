@@ -13,9 +13,11 @@ from django.contrib.auth.hashers import make_password,check_password
 
 # print(make_password('1234'))
 # print(check_password('1234','pbkdf2_sha256$320000$PkZpFTYwnHJqneea3kucX6$8I9DcV9CKqGsLywdUVnphUwdtGgQm61MOuIjmQSm9CE='))
+
 def index(request):
-    prdts = None
-    catgry=Category.get_all_categories()
+    # prdts = None
+    catgry=Category. get_all_categories()
+    # catgry=Category.objects.all()              
     categoryID=request.GET.get('Category')
     if categoryID:
         prdts=Product.get_all_product_by_categoryid(categoryID)
@@ -105,9 +107,23 @@ def signup(request):
                 'values':value
             }
             return render(request,'signup.html',data)
+            
 
 
 # login
 
 def login(request):
-    return render(request,'login.html')
+    if request.method =='GET':
+        print(request.method)
+        return render(request,'login.html')
+    else:
+        email=request.POST.get('email')
+        password=request.POST.get('password')
+        customer=Customer.get_customer_by_email(email)
+        print(customer)
+        print(email,password)
+        # return render(request,'login.html')
+        return redirect('homepage')
+
+    
+        

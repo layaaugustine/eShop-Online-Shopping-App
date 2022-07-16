@@ -54,13 +54,18 @@ class Customer(models.Model):
     email=models.EmailField()
     password =models.CharField(max_length=10)
 
+    @staticmethod
+    def get_customer_by_email(email):
+        return Customer.objects.filter(email=email)
+        
 
     def isExists(self):
         if Customer.objects.filter(email=self.email):
             return True
         else:
             return False
-
+    
+    
 class AdminCustomer(admin.ModelAdmin):
     list_display = ['first_name']
     
