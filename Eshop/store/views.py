@@ -8,6 +8,9 @@ from numpy import product
 from .models import Product,Category,Customer
 
 from django.contrib.auth.hashers import make_password,check_password
+
+from django.views import View
+
 # Create your views here.
 
 
@@ -112,13 +115,13 @@ def signup(request):
             
 
 
-# login
+# login   inside class
 
-def login(request):
-    if request.method =='GET':
-        print(request.method)
+class Login(View):
+    def get(self,request):
         return render(request,'login.html')
-    else:
+
+    def post(self,request):
         email=request.POST.get('email')
         password=request.POST.get('password')
         customer=Customer.get_customer_by_email(email)
@@ -137,6 +140,35 @@ def login(request):
         print(email,password)
         
         return render(request,'login.html',{'error':error_message})
+        
+
+
+
+# login without use class method
+
+# def login(request):
+    # if request.method =='GET':
+    #     print(request.method)
+    #     return render(request,'login.html')
+    # else:
+    #     email=request.POST.get('email')
+    #     password=request.POST.get('password')
+    #     customer=Customer.get_customer_by_email(email)
+
+    #     error_message = None
+        
+    #     if customer:
+    #         flag=check_password(password , customer.password)
+    #         if flag:
+    #             return redirect('homepage')
+    #         else:
+    #             error_message = "invalid password"
+    #     else:
+    #         error_message="invalid  email "
+
+    #     print(email,password)
+        
+    #     return render(request,'login.html',{'error':error_message})
         
 
     
