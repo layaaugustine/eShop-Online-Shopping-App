@@ -9,15 +9,14 @@
         <form action="/login" method="POST">
           {% csrf_token %}
 
-          <!-- error message -->
+          <!-- error message [alert] -->
           {% if error %}
           <div class="alert alert-danger" role="alert">
             {{error}}
           </div>
           {% endif%}
     
-         
-
+        
       <!-- email -->
 
         <div class="form-group">

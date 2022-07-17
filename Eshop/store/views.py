@@ -14,6 +14,8 @@ from django.contrib.auth.hashers import make_password,check_password
 # print(make_password('1234'))
 # print(check_password('1234','pbkdf2_sha256$320000$PkZpFTYwnHJqneea3kucX6$8I9DcV9CKqGsLywdUVnphUwdtGgQm61MOuIjmQSm9CE='))
 
+# index
+
 def index(request):
     # prdts = None
     catgry=Category. get_all_categories()
@@ -29,7 +31,7 @@ def index(request):
     # data['categories']=catgry
     return render(request,'index.html',data)
       
-
+#signup
 
 def signup(request):
     if request.method=='GET':
@@ -120,10 +122,22 @@ def login(request):
         email=request.POST.get('email')
         password=request.POST.get('password')
         customer=Customer.get_customer_by_email(email)
-        print(customer)
+
+        error_message = None
+        
+        if customer:
+            flag=check_password(password , customer.password)
+            if flag:
+                return redirect('homepage')
+            else:
+                error_message = "invalid password"
+        else:
+            error_message="invalid  email "
+
         print(email,password)
-        # return render(request,'login.html')
-        return redirect('homepage')
+        
+        return render(request,'login.html',{'error':error_message})
+        
 
     
         
