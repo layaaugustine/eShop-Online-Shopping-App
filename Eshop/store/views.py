@@ -34,6 +34,7 @@ def index(request):
     data={'products':prdts,'categories':catgry}
     # data['products']=prdts
     # data['categories']=catgry
+    print('you are :',request.session.get('email'))
     return render(request,'index.html',data)
 
 # signup - inside class
@@ -211,8 +212,14 @@ class Login(View):
         
         if customer:
             flag=check_password(password , customer.password)
+
             if flag:
+
+                request.session['customer_id']=customer.id
+                request.session['email']=customer.email
+
                 return redirect('homepage')
+
             else:
                 error_message = "invalid password"
         else:
