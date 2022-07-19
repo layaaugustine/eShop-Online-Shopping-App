@@ -19,23 +19,48 @@ from django.views import View
 # print(make_password('1234'))
 # print(check_password('1234','pbkdf2_sha256$320000$PkZpFTYwnHJqneea3kucX6$8I9DcV9CKqGsLywdUVnphUwdtGgQm61MOuIjmQSm9CE='))
 
+# index in class
+
+class Index(View):
+
+    def get(self,request):
+         # prdts = None
+        catgry=Category. get_all_categories()
+        # catgry=Category.objects.all()              
+        categoryID=request.GET.get('Category')
+        if categoryID:
+            prdts=Product.get_all_product_by_categoryid(categoryID)
+        else:
+            # prdts=Product.objects.all()
+            prdts=Product.get_all_product()
+        data={'products':prdts,'categories':catgry}
+        # data['products']=prdts
+        # data['categories']=catgry
+        print('you are :',request.session.get('email'))
+        return render(request,'index.html',data)
+
+    def post(self,request):
+        product=request.POST.get('product_id')
+        print(product)
+        return redirect('homepage')
+
 # index
 
-def index(request):
-    # prdts = None
-    catgry=Category. get_all_categories()
-    # catgry=Category.objects.all()              
-    categoryID=request.GET.get('Category')
-    if categoryID:
-        prdts=Product.get_all_product_by_categoryid(categoryID)
-    else:
-        # prdts=Product.objects.all()
-        prdts=Product.get_all_product()
-    data={'products':prdts,'categories':catgry}
-    # data['products']=prdts
-    # data['categories']=catgry
-    print('you are :',request.session.get('email'))
-    return render(request,'index.html',data)
+# def index(request):
+#     # prdts = None
+#     catgry=Category. get_all_categories()
+#     # catgry=Category.objects.all()              
+#     categoryID=request.GET.get('Category')
+#     if categoryID:
+#         prdts=Product.get_all_product_by_categoryid(categoryID)
+#     else:
+#         # prdts=Product.objects.all()
+#         prdts=Product.get_all_product()
+#     data={'products':prdts,'categories':catgry}
+#     # data['products']=prdts
+#     # data['categories']=catgry
+#     print('you are :',request.session.get('email'))
+#     return render(request,'index.html',data)
 
 # signup - inside class
 
