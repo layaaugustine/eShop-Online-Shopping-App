@@ -1,5 +1,6 @@
 from atexit import register
 import email
+from itertools import product
 from tkinter.tix import Tree
 from django.db import models
 from django.contrib import admin
@@ -28,6 +29,10 @@ class Product(models.Model):
     category=models.ForeignKey(Category, on_delete=models.CASCADE,default=1)
     description = models.CharField(max_length=200,default='',null=True,blank=True)
     image = models.ImageField(upload_to='upload/models/')
+
+    @staticmethod
+    def get_products_by_id(ids):
+        return Product.objects.filter(id__in=ids)       #ids is a list
 
     @staticmethod
     def get_all_product():

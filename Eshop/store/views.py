@@ -24,7 +24,9 @@ from django.views import View
 class Index(View):
 
     def get(self,request):
-        
+        cart = request.session.get('cart')
+        if not cart:
+            request.session['cart']={}
          # prdts = None
         catgry=Category. get_all_categories()
         # catgry=Category.objects.all()              
@@ -51,7 +53,10 @@ class Index(View):
             quantity = cart.get(product)
             if quantity:
                 if remove:
-                    cart[product] = quantity-1
+                    if quantity<=1:
+                        cart.pop(product)
+                    else:
+                        cart[product] = quantity-1
                 else:
                     cart[product] = quantity+1
             
@@ -261,8 +266,8 @@ class Login(View):
 
             if flag:
 
-                request.session['customer_id']=customer.id
-                request.session['email']=customer.email
+                request.session['customer']=customer.id
+                
 
                 return redirect('homepage')
 
@@ -277,33 +282,14 @@ class Login(View):
         
 
 
+def logout(request):
+    request.session.clear()
+    return redirect('login')
 
-# login without use class method
-
-# def login(request):
-    # if request.method =='GET':
-    #     print(request.method)
-    #     return render(request,'login.html')
-    # else:
-    #     email=request.POST.get('email')
-    #     password=request.POST.get('password')
-    #     customer=Customer.get_customer_by_email(email)
-
-    #     error_message = None
-        
-    #     if customer:
-    #         flag=check_password(password , customer.password)
-    #         if flag:
-    #             return redirect('homepage')
-    #         else:
-    #             error_message = "invalid password"
-    #     else:
-    #         error_message="invalid  email "
-
-    #     print(email,password)
-        
-    #     return render(request,'login.html',{'error':error_message})
-        
-
-    
-        
+class Cart(View):
+    def get(self,request):
+        # print(list(request.session.get('cart').keys()))
+        ids=list(request.session.get('cart').keys())
+        products=Product.get_products_by_id(ids)
+        print(products)
+        return render(request,'cart.html')

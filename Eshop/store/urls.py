@@ -1,19 +1,15 @@
 from django.urls import path
 from .import views
-from .views import Login,Signup,Index
+from .import views
+from .views import Login,Signup,Index,Cart
 urlpatterns = [
-
-    # path('',views.index,name='homepage'),
-
     path('',Index.as_view(),name='homepage'),
+    path('signup',Signup.as_view(),name='signup'),
+    path('login',Login.as_view(),name='login'),
+    path('logout',views.logout,name='logout'),
+    path('cart',Cart.as_view(),name='cart')
 
-    # path('signup',views.signup),
 
-    path('signup',Signup.as_view()),
-
-    # path('login',views.login),
-
-    path('login',Login.as_view())
 
 
 ]
