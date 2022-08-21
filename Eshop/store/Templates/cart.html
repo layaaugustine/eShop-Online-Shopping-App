@@ -3,6 +3,7 @@
 {% block content %}
 
 {% load cart %}
+{% load custom_filter %}
     <div class="container">
         <div class="border rounded  border-primary p-4 m-4">
            <p class="display-4 text-secondary"> Your Cart</p>
@@ -22,11 +23,11 @@
                     {% for product in products %}
                     <tr>
                         <td>{{forloop.counter}}</td>
-                        <td><img src="{{ product.image.url }}" style="width: 7rem ;" ></td>
+                        <td><img src="{{ product.image.url }}" style="width: 4rem ;" ></td>
                         <td>{{ product.name }}</td>
-                        <td>{{ product.price }}</td>
+                        <td>{{ product.price|currency }}</td>
                         <td>{{ product|cart_quantity:request.session.cart}}</td>
-                        <td>{{product|price_total:request.session.cart}}</td>
+                        <td>{{product|price_total:request.session.cart|currency}}</td>
                     </tr>
                    {% endfor %}
                 </tbody>
@@ -37,7 +38,7 @@
                     <tr>
                         <th colspan="3"></th>
                         <th colspan="1">Total</th>
-                        <th >{{products|total_cart_price:request.session.cart}}</th>
+                        <th >{{products|total_cart_price:request.session.cart|currency}}</th>
                     </tr>
                 </tfoot>
             </table>
