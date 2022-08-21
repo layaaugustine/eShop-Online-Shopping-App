@@ -42,6 +42,7 @@ class Index(View):
 
     def post(self,request):
         product=request.POST.get('product_id')
+        remove= request.POST.get('remove')
         cart=request.session.get('cart')
         print("my old cart",cart)
 
@@ -49,7 +50,10 @@ class Index(View):
         if cart:
             quantity = cart.get(product)
             if quantity:
-                cart[product] = quantity+1
+                if remove:
+                    cart[product] = quantity-1
+                else:
+                    cart[product] = quantity+1
             
             else:
                 cart[product] = 1

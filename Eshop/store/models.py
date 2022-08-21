@@ -1,7 +1,11 @@
+from atexit import register
 import email
+from tkinter.tix import Tree
 from django.db import models
 from django.contrib import admin
 from django.http import HttpRequest
+
+
 # Create your models her
 
 # ----------------CATEGORY------------------
@@ -70,7 +74,9 @@ class Customer(models.Model):
     
 class AdminCustomer(admin.ModelAdmin):
     list_display = ['first_name']
-    
+
+
+
     
 
   
