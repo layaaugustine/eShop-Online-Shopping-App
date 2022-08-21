@@ -5,7 +5,7 @@ from tkinter.tix import Tree
 from django.db import models
 from django.contrib import admin
 from django.http import HttpRequest
-
+import datetime
 
 # Create your models her
 
@@ -29,6 +29,7 @@ class Product(models.Model):
     category=models.ForeignKey(Category, on_delete=models.CASCADE,default=1)
     description = models.CharField(max_length=200,default='',null=True,blank=True)
     image = models.ImageField(upload_to='upload/models/')
+
 
     @staticmethod
     def get_products_by_id(ids):
@@ -82,6 +83,21 @@ class AdminCustomer(admin.ModelAdmin):
 
 
 
-    
+# -----------------ORDER------------------------
+
+class Order(models.Model):
+    product = models.ForeignKey(Product,on_delete=models.CASCADE)
+    customer = models.ForeignKey(Customer,on_delete=models.CASCADE)
+    quantity = models.IntegerField(default=1)
+    price = models.IntegerField()
+    address = models.CharField(max_length=50,default='',blank=True)
+    phone = models.CharField(max_length=50,default='',blank=True)
+    date = models.DateField(default=datetime.datetime.today)
+
+ 
+
+# class AdminOrder(admin.ModelAdmin):
+
+
 
   
