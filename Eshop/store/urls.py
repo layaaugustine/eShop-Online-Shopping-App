@@ -11,7 +11,4 @@ urlpatterns = [
     path('check-out',Checkout.as_view(),name='check-out'),
     path('orders',OrderView.as_view(),name='orders')
 
-
-
-
 ]
