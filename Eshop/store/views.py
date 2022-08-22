@@ -5,7 +5,7 @@ from urllib import response
 from django.http import HttpResponse
 from django.shortcuts import render,redirect
 from django.template import loader
-from django.http import HttpResponse
+from django.http import HttpResponse,HttpResponseRedirect
 from matplotlib.pyplot import cla
 from numpy import product
 from .models import Product,Category,Customer,Order
@@ -13,6 +13,8 @@ from .models import Product,Category,Customer,Order
 from django.contrib.auth.hashers import make_password,check_password
 
 from django.views import View
+# from .middlewares.auth import auth_middleware
+# from django.utils.decorators import method_decorator
 
 # Create your views here.
 
@@ -155,7 +157,12 @@ class Signup(View):
 
 
 class Login(View):
+
+    # return_url = None     # url (last)
+
     def get(self,request):
+
+        # Login.return_url = request.GET.get('return_url')
         return render(request,'login.html')
 
     def post(self,request):
@@ -173,6 +180,10 @@ class Login(View):
                 request.session['customer']=customer.id
                 
 
+                # if Login.return_url:
+                #     return HttpResponseRedirect(Login.return_url)
+                # else:
+                #     Login.return_url =  None
                 return redirect('homepage')
 
             else:
@@ -189,6 +200,8 @@ class Login(View):
 def logout(request):
     request.session.clear()
     return redirect('login')
+
+
 
 class Cart(View):
     def get(self,request):
@@ -233,6 +246,8 @@ class Checkout(View):
 
 
 class OrderView(View):
+
+   
     def get(self, request):
         customer = request.session.get('customer')
         orders = Order.get_orders_by_customer(customer)
