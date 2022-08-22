@@ -1,4 +1,5 @@
 from atexit import register
+from distutils.sysconfig import customize_compiler
 import email
 from itertools import product
 from tkinter.tix import Tree
@@ -97,6 +98,11 @@ class Order(models.Model):
  
     def placeOrder(self):
         self.save()
+
+
+    @staticmethod
+    def get_orders_by_customer(customer_id):
+        return Order.objects.filter(customer = customer_id)
 
 
 
