@@ -1,4 +1,5 @@
 import email
+from operator import add
 from pydoc import classname
 from urllib import response
 from django.http import HttpResponse
@@ -7,7 +8,7 @@ from django.template import loader
 from django.http import HttpResponse
 from matplotlib.pyplot import cla
 from numpy import product
-from .models import Product,Category,Customer
+from .models import Product,Category,Customer,Order
 
 from django.contrib.auth.hashers import make_password,check_password
 
@@ -72,23 +73,7 @@ class Index(View):
 
 # index
 
-# def index(request):
-#     # prdts = None
-#     catgry=Category. get_all_categories()
-#     # catgry=Category.objects.all()              
-#     categoryID=request.GET.get('Category')
-#     if categoryID:
-#         prdts=Product.get_all_product_by_categoryid(categoryID)
-#     else:
-#         # prdts=Product.objects.all()
-#         prdts=Product.get_all_product()
-#     data={'products':prdts,'categories':catgry}
-#     # data['products']=prdts
-#     # data['categories']=catgry
-#     print('you are :',request.session.get('email'))
-#     return render(request,'index.html',data)
 
-# signup - inside class
 
 class Signup(View):
     def get(self,request):
@@ -167,88 +152,7 @@ class Signup(View):
         
 
 
-#signup
 
-# def signup(request):
-#     if request.method=='GET':
-#         print(request.method)            # view form to customer
-#         return render(request,'signup.html')
-#     else:
-#         print(request.method)             # customer post details
-#         postData=request.POST
-#         first_names = postData.get('firstname')
-#         last_names = postData.get('lastname')
-#         phones= postData.get('phone')
-#         emails= postData.get('email')
-#         passwords= postData.get('password')
-#         # return registerUser(request)
-
-
-        #validation
-
-        # value = {
-        #     'firstz_name':first_names,
-        #     'lastz_name' :last_names,
-        #     'phonez' : phones,
-        #     'emailz' :emails
-        # }
-
-        # error_message = None
-
-        # customer = Customer(first_name =first_names,
-        #                         last_name = last_names,
-        #                         phone = phones,
-        #                         email=emails,
-        #                         password=passwords)
-
-        # # validateCustomer(customer)
-
-        # if (not first_names):
-        #     error_message="First Name Required !!!"
-        # elif len(first_names)<4:
-        #     error_message = "First Name must be 4 char long  or more "
-        # elif (not last_names):
-        #     error_message="Last Name Required !!!"
-        # elif len(last_names)<4:
-        #      error_message = "Last Name must be 4 char long  or more "
-        # elif (not phones):
-        #     error_message="Phone Number Required !!!"
-        # elif len(phones)!=10:
-        #     error_message="Phone Number Must be 10"
-        # elif (not passwords):
-        #     error_message="Password Required !!!"
-        # elif len(passwords)<6:
-        #     error_message="Password Must be 6 char long"
-        # elif len(emails)<5:
-            # error_message="Email must be 5 char long"
-
-        # elif customer.isExists():
-        #     error_message="Email address already Exist!!"
-      
-
-        # saving 
-
-
-
-        # if not error_message:
-        #     # customer = Customer(first_name =first_names,
-        #     #                     last_name = last_names,
-        #     #                     phone = phones,
-        #     #                     email=emails,
-        #     #                     password = passwords)
-        #     customer.password=make_password(customer.password)    # Encoding form
-        #     customer.save()
-        #     return redirect('homepage')
-        # else:
-        #     data={
-        #         'error':error_message,                            # if we have error,entered data automatic save,its add in signup page too
-        #         'values':value
-        #     }
-        #     return render(request,'signup.html',data)
-            
-
-
-# login -  inside class
 
 class Login(View):
     def get(self,request):
@@ -295,3 +199,34 @@ class Cart(View):
         return render(request,'cart.html',{
             'products':products
         })
+
+class Checkout(View):
+    def post(self, request):
+        # print(request.POST)
+        address = request.POST.get('address')
+        phone = request.POST.get('phone')
+        customer = request.session.get('customer')
+        cart=request.session.get('cart')
+
+        products = Product.get_products_by_id(list(cart.keys()))
+
+        print("id of product : number of product :",cart)
+        print("product :",products)
+        print("cuustomer id :",customer)
+        print(address)
+        print(phone)
+
+
+        for product in products:
+            order = Order( customer=Customer(id=customer),
+                product=product,
+                price = product.price,
+                address = address,
+                phone = phone,
+                quantity=cart.get(str(product.id))
+                )
+
+            order.save()
+        request.session['cart'] = {}
+
+        return redirect('cart')

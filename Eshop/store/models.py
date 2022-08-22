@@ -95,8 +95,8 @@ class Order(models.Model):
     date = models.DateField(default=datetime.datetime.today)
 
  
-
-# class AdminOrder(admin.ModelAdmin):
+    def placeOrder(self):
+        self.save()
 
 
 
