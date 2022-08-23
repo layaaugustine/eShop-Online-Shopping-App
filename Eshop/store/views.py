@@ -22,6 +22,11 @@ from django.views import View
 # print(make_password('1234'))
 # print(check_password('1234','pbkdf2_sha256$320000$PkZpFTYwnHJqneea3kucX6$8I9DcV9CKqGsLywdUVnphUwdtGgQm61MOuIjmQSm9CE='))
 
+
+
+def front(request):
+    return render(request,'front.html')
+
 # index in class
 
 class Index(View):
@@ -31,7 +36,7 @@ class Index(View):
         if not cart:
             request.session['cart']={}
          # prdts = None
-        catgry=Category. get_all_categories()
+        catgry=Category.get_all_categories()
         # catgry=Category.objects.all()              
         categoryID=request.GET.get('Category')
         if categoryID:
