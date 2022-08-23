@@ -16,7 +16,7 @@
 
 <!-- nav bar -->
 
-    <nav class="cls navbar  navbar-expand-lg navbar-light bg-white border border-dark border-2 ">
+    <nav class="cls navbar  navbar-expand-lg navbar-light bg-white border border-dark border-1 ">
         <div class="container-fluid">
           <!-- <a class="colz navbar-brand  " href="/">E-Shop</a> -->
           <a href="/"><img width="130px" src="{% static 'image/ajio.jpeg' %}"></a>
@@ -28,9 +28,9 @@
               <li class="nav-item">
                 <a class="nav-link active " aria-current="page" href="/login">Login</a>
               </li>
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                 <a class="nav-link " href="/signup">Sigup</a>
-              </li>
+              </li> -->
             </ul>
           </div>
         </div>
@@ -49,16 +49,22 @@
     </div>
     <div class="carousel-inner">
       <div class="carousel-item active">
-        <img  src="{% static 'image/women.jpeg' %}" class="slide d-block w-100" alt="...">
+        <a href="/login"><img  src="{% static 'image/womens.jpg' %}" class="slide d-block w-100" alt="..."></a>
       </div>
       <div class="carousel-item">
-        <img src="{% static 'image/shirtss.jpg' %}" class="slide d-block w-100" alt="...">
+        <a href="/login"><img src="{% static 'image/mens.jpg' %}" class="slide d-block w-100" alt="..."></a>
       </div>
       <div class="carousel-item">
-        <img src="{% static 'image/mobile.jpeg' %}" class="slide d-block w-100" alt="...">
+        <a href="/login"><img src="{% static 'image/kids.jpg' %}" class="slide d-block w-100" alt="..."></a>
       </div>
       <div class="carousel-item">
-        <img src="{% static 'image/veg.jpeg' %}" class="slide d-block w-100" alt="...">
+        <a href="/login"><img src="{% static 'image/bag.jpg' %}" class="slide d-block w-100" alt="..."></a>
+      </div>
+      <div class="carousel-item">
+        <a href="/login"><img src="{% static 'image/imgss.jpg' %}" class="slide d-block w-100" alt="..."></a>
+      </div>
+      <div class="carousel-item">
+        <a href="/login"><img src="{% static 'image/imgxx.jpg' %}" class="slide d-block w-100" alt="..."></a>
       </div>
     </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
